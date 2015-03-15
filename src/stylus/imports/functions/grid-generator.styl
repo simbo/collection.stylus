@@ -1,0 +1,115 @@
+/**
+ * Grid generator
+ * =====================================================================
+ */
+
+grid-placeholder-cache = {}
+
+grid-placeholder(key)
+    unless key in grid-placeholder-cache
+        grid-placeholder-cache[key] = length(grid-placeholder-cache)
+        ${key}
+            {block}
+
+create-grid(options = {})
+
+    grid = merge({
+        column-count: 12,
+        prefix: '',
+        row-class: row,
+        column-class: col,
+        gutter-width: 30px,
+        placeholders-only: true,
+        breakpoints: {
+            xs: 0,
+            xs-landscape: 420px,
+            sm: 768px,
+            md: 992px,
+            lg: 1200px,
+            xl: 1800px
+        }
+    }, options)
+
+    grid.row-class = grid.prefix + grid.row-class
+    grid.column-class = grid.prefix + grid.column-class
+    grid.column-padding = (grid.gutter-width / 2)
+    grid.column-types-properties = {
+        pull: right,
+        push: left,
+        offset: margin-left
+    }
+
+    +grid-placeholder('grid-clearfix-placeholder')
+        &:before,
+        &:after
+            content: " "
+            display: table
+        &:after
+            clear: both
+
+    +grid-placeholder('grid-row-placeholder__margin' + grid.column-padding)
+        margin-left: -(grid.column-padding)
+        margin-right: -(grid.column-padding)
+
+    ${grid.row-class}
+        @extends $grid-clearfix-placeholder
+        @extends ${unquote('grid-row-placeholder__margin' + grid.column-padding)}
+
+    unless grid.placeholders-only
+        .{grid.row-class}
+            @extends ${grid.row-class}
+
+    create-grid-columns(breakpoint-key = '', media = 'no-media')
+        breakpoint-appendix = breakpoint-key=='' ? '' : '-' + breakpoint-key
+        class-prefix = grid.column-class + breakpoint-appendix
+        placeholder-prefix = 'grid-column-placeholder__' + media + '__'
+
+        +grid-placeholder(placeholder-prefix + 'padding' + grid.column-padding)
+            position: relative
+            min-height: 1px // prevent columns from collapsing when empty
+            float: left
+            box-sizing: border-box
+            padding-left: grid.column-padding
+            padding-right: grid.column-padding
+
+        ${class-prefix}
+            @extends ${unquote(placeholder-prefix + 'padding' + grid.column-padding)}
+
+        for i in 0..grid.column-count
+            column-width = (p = (i / grid.column-count) * 100) > 0 ? unit(p, '%') : p
+
+            if i > 0
+
+                +grid-placeholder(placeholder-prefix + 'width' + column-width)
+                    width: column-width
+
+                ${class-prefix}-{i}
+                    @extends ${class-prefix}
+                    @extends ${unquote(placeholder-prefix + 'width' + column-width)}
+
+                unless grid.placeholders-only
+                    .{class-prefix}-{i}
+                        @extends ${class-prefix}-{i}
+
+            for type, prop in grid.column-types-properties
+                prop-value = (i > 0) or (type==offset) ? column-width : auto
+
+                +grid-placeholder(placeholder-prefix + prop + prop-value)
+                    {prop}: prop-value
+
+                ${class-prefix}-{type}-{i}
+                    @extends ${unquote(placeholder-prefix + prop + prop-value)}
+
+                unless grid.placeholders-only
+                    .{class-prefix}-{type}-{i}
+                        @extends ${class-prefix}-{type}-{i}
+
+    if type-of(grid.breakpoints) == 'object'
+        for breakpoint-key, breakpoint in grid.breakpoints
+            if remove-unit(breakpoint) > 0
+                @media (min-width: breakpoint)
+                    create-grid-columns(breakpoint-key, 'min-width' + breakpoint)
+            else
+                create-grid-columns(breakpoint-key)
+    else
+        create-grid-columns()

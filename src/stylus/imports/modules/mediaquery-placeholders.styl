@@ -1,0 +1,12 @@
+/**
+ * Create empty media queries for proper sorting with mqpacker
+ * =====================================================================
+ */
+
+for key, bp in breakpoints
+    if (bp.min!=0)
+        @media ( min-width: bp.min ) { foo: bar; }
+    if (bp.max!=0)
+        @media ( max-width: bp.max) { foo: bar; }
+    if (bp.min!=0) and (bp.max!=0)
+        @media ( min-width: bp.min ) and ( max-width: bp.max) { foo: bar; }

@@ -1,0 +1,45 @@
+/**
+ * Mediaquery mixins
+ * =====================================================================
+ */
+
+// retina displays
+mq-retina()
+    @media only screen and ( -webkit-min-device-pixel-ratio: 2      ),
+           only screen and (    min--moz-device-pixel-ratio: 2      ),
+           only screen and (      -o-min-device-pixel-ratio: 2/1    ),
+           only screen and (         min-device-pixel-ratio: 2      ),
+           only screen and (                 min-resolution: 192dpi ),
+           only screen and (                 min-resolution: 2dppx  )
+        block
+
+// media min-width
+mq-min( minWidth )
+    @media ( min-width: minWidth )
+        block
+
+// media max- and min-width
+mq-minmax( minWidth, maxWidth )
+    @media ( min-width: minWidth ) and ( max-width: maxWidth )
+        block
+
+// media max-width
+mq-max( maxWidth )
+    @media ( max-width: maxWidth )
+        block
+
+// media queries for predefined breakpoints
+mq-bp(key, minmax = false, bp = breakpoints)
+    key = quote(key)
+    minmax = quote(minmax)
+    unless bp[key]
+        return
+    if ((minmax in ('max' 'max(a, b)')) and (bp[key].max!=0)) or (bp[key].min==0)
+        +mq-max(bp[key].max)
+            block
+    else if ((minmax in ('min' 'min(a, b)')) and (bp[key].min!=0)) or (bp[key].max==0)
+        +mq-min(bp[key].min)
+            block
+    else if (bp[key].min!=0) and (bp[key].max!=0)
+        +mq-minmax(bp[key].min, bp[key].max)
+            block

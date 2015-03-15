@@ -1,0 +1,34 @@
+/**
+ * Responsive helpers
+ * =====================================================================
+ */
+
+$responsive-visibility-hidden
+    display: none !important
+
+responsive-visibility(key)
+    $hidden-{key}
+        display: none !important
+    .hidden-{key}
+        @extends $hidden-{key}
+    for type in inline block inline-block
+        $visible-{key}-{type}
+            display: type !important
+        .visible-{key}-{type}
+            @extends $visible-{key}-{type}
+
+for key, bp in breakpoints
+    if (bp.min==0)
+        +mq-max(bp.max)
+            responsive-visibility(key)
+    else if (bp.max==0)
+        +mq-min(bp.min)
+            responsive-visibility(key)
+    else
+        +mq-minmax(bp.min, bp.max)
+            responsive-visibility(key)
+    for type in inline block inline-block
+        $visible-{key}-{type}
+            @extends $responsive-visibility-hidden
+        .visible-{key}-{type}
+            @extends $visible-{key}-{type}
