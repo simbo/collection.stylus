@@ -10,8 +10,7 @@ module.exports = (function(config) {
 
     // data
     var cwd   = process.cwd(),
-        pkg   = require(cwd + '/package.json'),
-        bower = require(cwd + '/bower.json');
+        pkg   = require(cwd + '/package.json');
 
     /**
      * + Paths
@@ -20,7 +19,6 @@ module.exports = (function(config) {
 
     config.paths = (function(p) {
         p.root      = cwd;
-        p.bower     = path.join(p.root, 'bower_components');
         p.node      = path.join(p.root, 'node_modules');
         p.src       = path.join(p.root, 'src');
         p.dest      = path.join(p.root, 'dest');
