@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+- '0.12'
+deploy:
+  provider: npm
+  email: simbo@simbo.de
+  api_key:
+    secure: JWgPLi9mUQDfmDdTh3fjqiCLuApyZ5TJnesSTazlG8rFEJtwzNpmj4E8JxQj7poNkJOt3hNqCKmTsPdXEK5jn6A3ZSRoYBMJLxkHgdQIKnyJz5JeAdivwMphWgJl8Mu1pwKKoc1AXDyx1mx1z4XthhEpPIozNWcDKiHrkLWg7PA=
+  on:
+    tags: true
+    repo: simbo/collection.stylus
+    all_branches: true
+before_script:
+  - npm install -g gulp
