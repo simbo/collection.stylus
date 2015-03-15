@@ -5,10 +5,9 @@ deploy:
   provider: npm
   email: simbo@simbo.de
   api_key:
-    secure: JWgPLi9mUQDfmDdTh3fjqiCLuApyZ5TJnesSTazlG8rFEJtwzNpmj4E8JxQj7poNkJOt3hNqCKmTsPdXEK5jn6A3ZSRoYBMJLxkHgdQIKnyJz5JeAdivwMphWgJl8Mu1pwKKoc1AXDyx1mx1z4XthhEpPIozNWcDKiHrkLWg7PA=
+    secure: KuNgxPAlcY5qquD3HpjbefEyvSrKLdov2kNfp9d5CIyxaYgoPW1h3bdD3tU8U71mOd9L2j7/pc/ihyVC5dxb0D/ISgLWT842gXOkwyDbaQDVSid1IVCw71AZyEIz1LRi0qCV8p6xaC8Y+kyqjWT/lrqjYKgS+Ut5jtH2OwFju5E=
   on:
     tags: true
     repo: simbo/collection.stylus
-    all_branches: true
 before_script:
-  - npm install -g gulp
+- npm install -g gulp
