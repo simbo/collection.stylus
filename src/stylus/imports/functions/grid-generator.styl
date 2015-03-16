@@ -40,11 +40,11 @@ create-grid(options = {})
     }
 
     +grid-placeholder('grid-clearfix-placeholder')
-        &:before,
-        &:after
+        &::before,
+        &::after
             content: " "
             display: table
-        &:after
+        &::after
             clear: both
 
     +grid-placeholder('grid-row-placeholder__margin' + grid.column-padding)
