@@ -34,7 +34,7 @@
     "gulp-ext-replace": "^0.1.0",
     "gulp-if": "^1.2.5",
     "gulp-postcss": "^4.0.3",
-    "gulp-sourcemaps": "^1.5.0",
+    "gulp-sourcemaps": "^1.5.1",
     "gulp-stylus": "^2.0.1",
     "gulp-util": "^3.0.4",
     "lodash": "^3.5.0",
