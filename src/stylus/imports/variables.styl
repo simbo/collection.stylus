@@ -3,7 +3,7 @@
  * =====================================================================
  */
 
-breakpoints = {
+breakpoints := {
     xs: {
         min: 0,
         max: 479px
@@ -36,12 +36,12 @@ breakpoints = {
  * =====================================================================
  */
 
-grid-breakpoints = {}
+if !(grid-breakpoints is defined)
+    grid-breakpoints = {}
+    for key, value in breakpoints
+        grid-breakpoints[key] = value.min
 
-for key, value in breakpoints
-    grid-breakpoints[key] = value.min
-
-grid-config = {
+grid-config := {
     placeholders-only: true,
     column-count: 12,
     gutter-width: 0,
