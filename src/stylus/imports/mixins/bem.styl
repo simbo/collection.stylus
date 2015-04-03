@@ -1,0 +1,120 @@
+/**
+ * Expressive BEM mixins
+ * --
+ * Based on an idea of Anders Schmidt Hansen (@andersschmidt)
+ * http://codepen.io/andersschmidt/thoughts/expressive-bem-with-sass-a-different-approach
+ * http://codepen.io/andersschmidt/thoughts/expressive-bem-with-sass-part-ii-a-first-draft-of-mixins/
+ */
+
+
+/**
+ * Creates a new, top-level Block
+ * --
+ * If a type (e.g. component, module, utility) is given, it will auto-generate
+ * a namespaced class that adheres to Harry Roberts' post on namespaced BEM
+ * classes. Remember, the type is optional.
+ *
+ * If given: +new(product-item, component)
+ * Produces: .c-product-item
+ */
+
+new(name, type = null)
+    /
+        if type != null
+            type = toString(type)
+            namespace = substr(type, 0, 1)
+            .{namespace}-{name}
+                {block}
+        else
+            .{name}
+                {block}
+
+
+/**
+ * Creates an Element
+ * --
+ *
+ * If given:
+ * +new(product-item, component)
+ *   +has(title)
+ *
+ * Produces:
+ * .c-product-item {}
+ * .c-product-item__title {}
+ *
+ * If given:
+ * +new(person)
+ *   +when(female)
+ *     +has(hand, person) refers to the parent scope
+ *
+ * Produces:
+ * .person {}
+ * .person--female {}
+ * .person--female .person__hand {}
+ */
+
+has(name, childOf = '')
+    if childOf != ''
+        .{childOf}__{name}
+            {block}
+    else
+        {selector()}__{name}
+            {block}
+
+
+/**
+ * Creates a Modifier
+ * --
+ *
+ * If given:
+ * +new(person)
+ *   +when(female)
+ *
+ * Produces:
+ * .person {}
+ * .person--female {}
+ */
+
+when(name)
+    {selector()}--{name}
+        {block}
+
+
+/**
+ * Creates a behaviorial State
+ * --
+ *
+ * If given:
+ * +new(menu, component)
+ *   +has(item)
+ *     +if(active)
+ *
+ * Produces:
+ * .c-menu {}
+ * .c-menu__item {}
+ * .c-menu__item.is-active {}
+ */
+
+is(state)
+    &.is-{state}
+        {block}
+
+
+/**
+ * Creates an ownership State
+ * --
+ *
+ * If given:
+ * +new(menu, component)
+ *   +has(item)
+ *     +with(dropdown)
+ *
+ * Produces:
+ * .c-menu {}
+ * .c-menu__item {}
+ * .c-menu__item.has-dropdown {}
+ */
+
+with(something)
+    &.has-{something}
+        {block}
