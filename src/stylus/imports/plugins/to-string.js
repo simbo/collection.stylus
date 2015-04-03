@@ -5,7 +5,7 @@
 
 module.exports = function(){
     return function(style){
-        style.define('quote', function(val) {
+        style.define('toString', function(val) {
             return val.toString();
         });
     };
