@@ -30,8 +30,8 @@ mq-max( maxWidth )
 
 // media queries for predefined breakpoints
 mq-bp(key, minmax = false, bp = breakpoints)
-    key = quote(key)
-    minmax = quote(minmax)
+    key = toString(key)
+    minmax = toString(minmax)
     unless bp[key]
         return
     if ((minmax in ('max' 'max(a, b)')) and (bp[key].max!=0)) or (bp[key].min==0)
