@@ -45,9 +45,7 @@ module.exports = (function(config) {
     // stylus options
     config.stylus = {
         // add imports and vendor folders to @import path
-        paths: [
-            path.join(config.paths.src, 'stylus/imports')
-        ],
+        paths: [],
         // function for generating base64 data-uris
         url: {
             name: 'inline-url',

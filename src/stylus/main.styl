@@ -1,12 +1,20 @@
-@require 'variables'
+collection__folder_imports   := 'imports/'
+collection__folder_plugins   := collection__folder_imports + 'plugins/'
+collection__folder_functions := collection__folder_imports + 'functions/'
+collection__folder_mixins    := collection__folder_imports + 'mixins/'
+collection__folder_modules   := collection__folder_imports + 'modules/'
 
-use('plugins/to-string.js')
+use(collection__folder_plugins + 'to-string.js')
 
-@require 'functions/*'
+@require collection__folder_imports   + 'variables'
 
-@require 'mixins/*'
+@require collection__folder_functions + '*'
 
-@require 'modules/mediaquery-placeholders'
-@require 'modules/*'
+@require collection__folder_mixins    + '*'
 
-create-grid(grid-config);
+@require collection__folder_modules   + 'mediaquery-placeholders'
+
+@require collection__folder_modules   + '*'
+
+if type-of(grid-config) == 'object'
+    create-grid(grid-config);
