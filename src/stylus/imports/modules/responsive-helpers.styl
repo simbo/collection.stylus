@@ -3,18 +3,31 @@
  * =====================================================================
  */
 
+responsive-visibility__placeholders_only := false
+
 $responsive-visibility-hidden
     display: none !important
 
 responsive-visibility(key)
     $hidden-{key}
         display: none !important
-    .hidden-{key}
-        @extends $hidden-{key}
+    if !responsive-visibility__placeholders_only
+        .hidden-{key}
+            @extends $hidden-{key}
     for type in inline block inline-block
         $visible-{key}-{type}
             display: type !important
-        .visible-{key}-{type}
+        if type == block
+            $visible-{key}
+                @extends $visible-{key}-{type}
+        if !responsive-visibility__placeholders_only
+            responsive-visibility__extend(key, type)
+
+responsive-visibility__extend(key, type)
+    .visible-{key}-{type}
+        @extends $visible-{key}-{type}
+    if type == block
+        .visible-{key}
             @extends $visible-{key}-{type}
 
 for key, bp in breakpoints
@@ -30,5 +43,8 @@ for key, bp in breakpoints
     for type in inline block inline-block
         $visible-{key}-{type}
             @extends $responsive-visibility-hidden
-        .visible-{key}-{type}
-            @extends $visible-{key}-{type}
+        if type == block
+            $visible-{key}
+                @extends $responsive-visibility-hidden
+        if !responsive-visibility__placeholders_only
+            responsive-visibility__extend(key, type)
