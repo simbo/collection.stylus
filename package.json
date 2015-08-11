@@ -8,7 +8,11 @@
     "type": "MIT",
     "url": "http://simbo.mit-license.org/"
   },
-  "private": false,
+  "main": "src/",
+  "files": [
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "test": "gulp build --environment production",
     "build": "gulp build --environment production",
