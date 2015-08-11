@@ -4,10 +4,12 @@ node_js:
 deploy:
   provider: npm
   email: simbo@simbo.de
-  api_key:
-    secure: KuNgxPAlcY5qquD3HpjbefEyvSrKLdov2kNfp9d5CIyxaYgoPW1h3bdD3tU8U71mOd9L2j7/pc/ihyVC5dxb0D/ISgLWT842gXOkwyDbaQDVSid1IVCw71AZyEIz1LRi0qCV8p6xaC8Y+kyqjWT/lrqjYKgS+Ut5jtH2OwFju5E=
+  api_key: ${NPM_API_KEY}
   on:
     tags: true
     repo: simbo/collection.stylus
 before_script:
 - npm install -g gulp
+env:
+  global:
+    secure: Ddyxoq3G/bUik1V0KfMyP9sQLxTM4ouI1QfXcMwfCdMo4F5U2iVtNX3Q4UBXN/RlKMa0OrYKa6zwn3TvmZdLJOGSDZVTw+hp5AMmwnwISDKY64MuEGSHfWPs1vK9hqKZs61/vSpJUozI1xSnUh2+dSirvpfvrmlzxA1lnTww494=
